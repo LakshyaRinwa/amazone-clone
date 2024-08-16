@@ -3,17 +3,15 @@
     padding: 20px;
     background-color: white;
     height: max-content;
-    font-family: monospace;
-}
-
-.checkout_ad {
+  }
+  
+  .checkout__ad {
     width: 100%;
     margin-bottom: 10px;
-}
-
-.checkout_title {
+  }
+  
+  .checkout__title {
     margin-right: 10px;
     padding: 10px;
     border-bottom: 1px solid lightgray;
-}
-
+  }

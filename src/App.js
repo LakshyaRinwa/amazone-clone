@@ -4,9 +4,14 @@ import Home from './Home';
 import Login from './Login';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Checkout from './Checkout';
+import Payment from './Payment';
 import { useEffect, useContext } from 'react';
 import { auth } from './firebase'; // Import auth from firebase
 import { StateContext } from './StateProvider'; // Adjust the path according to your project structure
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js';
+
+const promise=loadStripe('pk_test_51Po3Q4GpQcocRgogqHWindlX70Vll4OadWX2JIGmeoeQnALXpe4HRmFw7BqI5cEtjW6tXuTXDdmz0SRkLdxls3Rq00UScXXaF6');
 
 function App() {
   const [{}, dispatch] = useContext(StateContext); // Use useContext to access dispatch
@@ -42,6 +47,7 @@ function App() {
       <Routes>
         <Route path="/" element={<><Header /><Home /></>} />
         <Route path="/checkout" element={<><Header /><Checkout /></>} />
+        <Route path="/payment" element={<><Header /><Elements stripe={promise}><Payment/></Elements></>} />
         <Route path="/login" element={<><Login/></>} />
       </Routes>
     </Router>

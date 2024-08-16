@@ -1,37 +1,40 @@
-import React from 'react';
+import React from "react";
 import "./Subtotal.css";
 import CurrencyFormat from "react-currency-format";
-import { useStateValue } from './StateProvider';
-import { getBasketTotal } from './reducer';
-// Function to calculate the total value of the basket
+import { useStateValue } from "./StateProvider";
+import { getBasketTotal } from "./reducer";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
+function Subtotal() {
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const [{ basket }, dispatch] = useStateValue();
 
-function Subtotal() { // Pass basket as a prop
-  // Ensure basket is defined and is an array
-//   const itemCount = Array.isArray(basket) ? basket.length : 0; // Safely get the length
-const [{basket},dispatch] = useStateValue();
+  const handleCheckout = () => {
+    // Navigate to the checkout page
+    navigate('/payment');
+  };
 
   return (
-    <div className='subtotal'>
+    <div className="subtotal">
       <CurrencyFormat
         renderText={(value) => (
           <>
             <p>
-              Subtotal ({basket.length} items):
-              <strong>{` ₹${value}`}</strong> {/* Changed to ₹ */}
+              Subtotal ({basket.length} items): <strong>{value}</strong>
             </p>
-            <small className="subtotal_gift">
+            <small className="subtotal__gift">
               <input type="checkbox" /> This order contains a gift
             </small>
           </>
         )}
         decimalScale={2}
-        value={getBasketTotal(basket)} // Calculate total using the updated function
+        value={getBasketTotal(basket)} // Get the total from the basket
         displayType={"text"}
         thousandSeparator={true}
-        prefix={"₹"} // Changed prefix to "₹"
+        prefix={"₹"}
       />
-      <button>Proceed to Checkout</button>
+
+      <button onClick={handleCheckout}>Proceed to Checkout</button>
     </div>
   );
 }
